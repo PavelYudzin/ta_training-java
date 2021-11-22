@@ -17,12 +17,15 @@ import java.util.Scanner;
 public class ActionsWithNumbers {
     public static void main(String[] args) {
         int amountOfNumbers;
-        int[] arrayOfIntegerNumbers;
+//        int[] arrayOfIntegerNumbers;
+//
+//        amountOfNumbers = getAmountOfNumbers();
+//        arrayOfIntegerNumbers = getArrayOfIntegerNumbers(amountOfNumbers);
+        int[] arrayOfIntegerNumbers = {44, 999, 133, -87, 4423, -3, 54696, 38};
 
-        amountOfNumbers = getAmountOfNumbers();
-        arrayOfIntegerNumbers = getArrayOfIntegerNumbers(amountOfNumbers);
-
-        System.out.println(Arrays.toString(arrayOfIntegerNumbers));
+        System.out.println(Arrays.toString(arrayOfIntegerNumbers) + "\n");
+        printTheShortestNumber(arrayOfIntegerNumbers);
+        printTheLongestNumber(arrayOfIntegerNumbers);
     }
 
     public static int getAmountOfNumbers() {
@@ -67,5 +70,61 @@ public class ActionsWithNumbers {
         }
 
         return arrayOfIntegerNumbers;
+    }
+
+    public static void printTheShortestNumber(int[] arrayOfIntegers) {
+        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfIntegers);
+        int minLengthAmongNumbers = getMinLengthAmongNumbers(arrayOfNumbersAsStrings);
+
+        System.out.println("Min length among numbers: " + minLengthAmongNumbers);
+        System.out.print("Number(s) with min length: ");
+        for (String number : arrayOfNumbersAsStrings) {
+            if (number.length() == minLengthAmongNumbers) {
+                System.out.print(number + " ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static void printTheLongestNumber(int[] arrayOfIntegers) {
+        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfIntegers);
+        int maxLengthAmongNumbers = getMaxLengthAmongNumbers(arrayOfNumbersAsStrings);
+
+        System.out.println("Max length among numbers: " + maxLengthAmongNumbers);
+        System.out.print("Number(s) with max length: ");
+        for (String number : arrayOfNumbersAsStrings) {
+            if (number.length() == maxLengthAmongNumbers) {
+                System.out.print(number + " ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static String[] getArrayOfNumbersAsStrings(int[] array) {
+        String[] arrayOfStrings = new String[array.length];
+        for (int i = 0; i < arrayOfStrings.length; i++) {
+            arrayOfStrings[i] = Integer.toString(array[i]);
+        }
+        return arrayOfStrings;
+    }
+
+    public static int getMinLengthAmongNumbers(String[] arrayOfStrings) {
+        int minLength = arrayOfStrings[0].length();
+        for (int i = 1; i < arrayOfStrings.length; i++) {
+            if (arrayOfStrings[i].length() < minLength) {
+                minLength = arrayOfStrings[i].length();
+            }
+        }
+        return minLength;
+    }
+
+    public static int getMaxLengthAmongNumbers(String[] arrayOfStrings) {
+        int maxLength = arrayOfStrings[0].length();
+        for (int i = 1; i < arrayOfStrings.length; i++) {
+            if (arrayOfStrings[i].length() > maxLength) {
+                maxLength = arrayOfStrings[i].length();
+            }
+        }
+        return maxLength;
     }
 }
