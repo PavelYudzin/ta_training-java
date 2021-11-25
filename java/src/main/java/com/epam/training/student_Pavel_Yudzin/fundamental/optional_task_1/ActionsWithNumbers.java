@@ -26,6 +26,7 @@ public class ActionsWithNumbers {
         System.out.println(Arrays.toString(arrayOfIntegerNumbers) + "\n");
         printTheShortestNumber(arrayOfIntegerNumbers);
         printTheLongestNumber(arrayOfIntegerNumbers);
+        printNumbersSortedByIncreasingLength(arrayOfIntegerNumbers);
     }
 
     public static int getAmountOfNumbers() {
@@ -68,7 +69,6 @@ public class ActionsWithNumbers {
                 System.out.println(amountOfNumbers + " more left");
             }
         }
-
         return arrayOfIntegerNumbers;
     }
 
@@ -126,5 +126,27 @@ public class ActionsWithNumbers {
             }
         }
         return maxLength;
+    }
+
+    public static void printNumbersSortedByIncreasingLength(int[] arrayOfNumbers) {
+        String[] arrayOfStringsSortedByIncreasingLength = getArrayOfNumbersAsStrings(arrayOfNumbers);
+        arrayOfStringsSortedByIncreasingLength = sortArrayOfStringsByIncreasingLength(arrayOfStringsSortedByIncreasingLength);
+        System.out.println("Numbers sorted by increasing length: ");
+        System.out.println(Arrays.toString(arrayOfStringsSortedByIncreasingLength));
+    }
+
+    public static String[] sortArrayOfStringsByIncreasingLength(String[] arrayOfStrings) {
+        for (int i = 0; i < arrayOfStrings.length - 1; i++) {
+            int minLengthIndex = i;
+            for (int j = i + 1; j < arrayOfStrings.length; j++) {
+                if (arrayOfStrings[j].length() < arrayOfStrings[minLengthIndex].length()) {
+                    minLengthIndex = j;
+                }
+                String temp = arrayOfStrings[i];
+                arrayOfStrings[i] = arrayOfStrings[minLengthIndex];
+                arrayOfStrings[minLengthIndex] = temp;
+            }
+        }
+        return arrayOfStrings;
     }
 }
