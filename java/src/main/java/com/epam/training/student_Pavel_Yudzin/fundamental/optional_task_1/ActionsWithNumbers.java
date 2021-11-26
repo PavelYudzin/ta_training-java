@@ -21,12 +21,14 @@ public class ActionsWithNumbers {
 //
 //        amountOfNumbers = getAmountOfNumbers();
 //        arrayOfIntegerNumbers = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfIntegerNumbers = {44, 999, 133, -87, 4423, -3, 54696, 38};
+        int[] arrayOfIntegerNumbers = {-383, 44, -4, 5645, 49, 384};
 
         System.out.println(Arrays.toString(arrayOfIntegerNumbers) + "\n");
         printTheShortestNumber(arrayOfIntegerNumbers);
         printTheLongestNumber(arrayOfIntegerNumbers);
         printNumbersSortedByIncreasingLength(arrayOfIntegerNumbers);
+        printNumbersWithLengthLessThanAverage(arrayOfIntegerNumbers);
+        printNumbersWithLengthMoreThanAverage(arrayOfIntegerNumbers);
     }
 
     public static int getAmountOfNumbers() {
@@ -72,8 +74,8 @@ public class ActionsWithNumbers {
         return arrayOfIntegerNumbers;
     }
 
-    public static void printTheShortestNumber(int[] arrayOfIntegers) {
-        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfIntegers);
+    public static void printTheShortestNumber(int[] arrayOfInts) {
+        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfInts);
         int minLengthAmongNumbers = getMinLengthAmongNumbers(arrayOfNumbersAsStrings);
 
         System.out.println("Min length among numbers: " + minLengthAmongNumbers);
@@ -86,8 +88,8 @@ public class ActionsWithNumbers {
         System.out.println("\n");
     }
 
-    public static void printTheLongestNumber(int[] arrayOfIntegers) {
-        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfIntegers);
+    public static void printTheLongestNumber(int[] arrayOfInts) {
+        String[] arrayOfNumbersAsStrings = getArrayOfNumbersAsStrings(arrayOfInts);
         int maxLengthAmongNumbers = getMaxLengthAmongNumbers(arrayOfNumbersAsStrings);
 
         System.out.println("Max length among numbers: " + maxLengthAmongNumbers);
@@ -100,42 +102,59 @@ public class ActionsWithNumbers {
         System.out.println("\n");
     }
 
-    public static String[] getArrayOfNumbersAsStrings(int[] array) {
-        String[] arrayOfStrings = new String[array.length];
+    public static String[] getArrayOfNumbersAsStrings(int[] arrayOfInts) {
+        String[] arrayOfStrings = new String[arrayOfInts.length];
         for (int i = 0; i < arrayOfStrings.length; i++) {
-            arrayOfStrings[i] = Integer.toString(array[i]);
+            arrayOfStrings[i] = Integer.toString(arrayOfInts[i]);
         }
         return arrayOfStrings;
     }
 
     public static int getMinLengthAmongNumbers(String[] arrayOfStrings) {
-        int minLength = arrayOfStrings[0].length();
-        for (int i = 1; i < arrayOfStrings.length; i++) {
-            if (arrayOfStrings[i].length() < minLength) {
-                minLength = arrayOfStrings[i].length();
+        int minLength;
+
+        if (arrayOfStrings.length == 0) {
+            minLength = 0;
+        } else if (arrayOfStrings.length == 1) {
+            minLength = arrayOfStrings[0].length();
+        } else {
+            minLength = arrayOfStrings[0].length();
+            for (int i = 1; i < arrayOfStrings.length; i++) {
+                if (arrayOfStrings[i].length() < minLength) {
+                    minLength = arrayOfStrings[i].length();
+                }
             }
         }
         return minLength;
     }
 
     public static int getMaxLengthAmongNumbers(String[] arrayOfStrings) {
-        int maxLength = arrayOfStrings[0].length();
-        for (int i = 1; i < arrayOfStrings.length; i++) {
-            if (arrayOfStrings[i].length() > maxLength) {
-                maxLength = arrayOfStrings[i].length();
+        int maxLength;
+
+        if (arrayOfStrings.length == 0) {
+            maxLength = 0;
+        } else if (arrayOfStrings.length == 1) {
+            maxLength = 1;
+        } else {
+            maxLength = arrayOfStrings[0].length();
+            for (int i = 1; i < arrayOfStrings.length; i++) {
+                if (arrayOfStrings[i].length() > maxLength) {
+                    maxLength = arrayOfStrings[i].length();
+                }
             }
         }
         return maxLength;
     }
 
-    public static void printNumbersSortedByIncreasingLength(int[] arrayOfNumbers) {
-        String[] arrayOfStringsSortedByIncreasingLength = getArrayOfNumbersAsStrings(arrayOfNumbers);
-        arrayOfStringsSortedByIncreasingLength = sortArrayOfStringsByIncreasingLength(arrayOfStringsSortedByIncreasingLength);
+    public static void printNumbersSortedByIncreasingLength(int[] arrayOfInts) {
+        String[] arrayOfStringsSortedByIncreasingLength = getArrayOfNumbersAsStrings(arrayOfInts);
+        sortArrayOfStringsByIncreasingLength(arrayOfStringsSortedByIncreasingLength);
         System.out.println("Numbers sorted by increasing length: ");
         System.out.println(Arrays.toString(arrayOfStringsSortedByIncreasingLength));
+        System.out.println("");
     }
 
-    public static String[] sortArrayOfStringsByIncreasingLength(String[] arrayOfStrings) {
+    public static void sortArrayOfStringsByIncreasingLength(String[] arrayOfStrings) {
         for (int i = 0; i < arrayOfStrings.length - 1; i++) {
             int minLengthIndex = i;
             for (int j = i + 1; j < arrayOfStrings.length; j++) {
@@ -147,6 +166,48 @@ public class ActionsWithNumbers {
                 arrayOfStrings[minLengthIndex] = temp;
             }
         }
-        return arrayOfStrings;
+    }
+
+    public static void printNumbersWithLengthLessThanAverage(int[] arrayOfInts) {
+        String[] arrayOfStrings = getArrayOfNumbersAsStrings(arrayOfInts);
+        double averageLength = getAverageLength(arrayOfStrings);
+
+        System.out.printf("Average length of numbers: %.2f\n", averageLength);
+        System.out.println("Numbers with length less than average:");
+        for (String element : arrayOfStrings) {
+            if (element.length() < averageLength) {
+                System.out.print(element + " (length: " + element.length() + ") ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static void printNumbersWithLengthMoreThanAverage(int[] arrayOfInts) {
+        String[] arrayOfStrings = getArrayOfNumbersAsStrings(arrayOfInts);
+        double averageLength = getAverageLength(arrayOfStrings);
+
+        System.out.printf("Average length of numbers: %.2f\n", averageLength);
+        System.out.println("Numbers with length more than average:");
+        for (String element : arrayOfStrings) {
+            if (element.length() > averageLength) {
+                System.out.print(element + " (length: " + element.length()+ ") ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static double getAverageLength(String[] arrayOfStrings) {
+        double totalLength = 0;
+        int amountOfElements = arrayOfStrings.length;
+
+        for (String element : arrayOfStrings) {
+            totalLength += element.length();
+        }
+
+        if (amountOfElements == 0) {
+            return 0;
+        } else {
+            return totalLength / amountOfElements;
+        }
     }
 }
