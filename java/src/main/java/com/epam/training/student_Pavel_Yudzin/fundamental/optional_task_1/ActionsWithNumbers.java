@@ -11,24 +11,33 @@ package com.epam.training.student_Pavel_Yudzin.fundamental.optional_task_1;
     7. Найти число, состоящее только из различных цифр. Если таких чисел несколько, найти первое из них.
  */
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ActionsWithNumbers {
     public static void main(String[] args) {
         int amountOfNumbers;
-//        int[] arrayOfIntegerNumbers;
+//        int[] arrayOfInts;
 //
 //        amountOfNumbers = getAmountOfNumbers();
-//        arrayOfIntegerNumbers = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfIntegerNumbers = {-383, 44, -4, 5645, 49, 384};
+//        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
+        int[] arrayOfInts = {-384, 42, -4, 5645, 49, 384, 8};
 
-        System.out.println(Arrays.toString(arrayOfIntegerNumbers) + "\n");
-        printTheShortestNumber(arrayOfIntegerNumbers);
-        printTheLongestNumber(arrayOfIntegerNumbers);
-        printNumbersSortedByIncreasingLength(arrayOfIntegerNumbers);
-        printNumbersWithLengthLessThanAverage(arrayOfIntegerNumbers);
-        printNumbersWithLengthMoreThanAverage(arrayOfIntegerNumbers);
+        System.out.println(Arrays.toString(arrayOfInts) + "\n");
+        printTheShortestNumber(arrayOfInts);
+        printTheLongestNumber(arrayOfInts);
+        printNumbersSortedByIncreasingLength(arrayOfInts);
+        printNumbersWithLengthLessThanAverage(arrayOfInts);
+        printNumbersWithLengthMoreThanAverage(arrayOfInts);
+
+        int numberWithMinAmountOfDifferentDigits;
+        numberWithMinAmountOfDifferentDigits = getNumberWithMinAmountOfDifferentDigits(arrayOfInts);
+        System.out.println("Number with minimum amount of different digits: " + numberWithMinAmountOfDifferentDigits + "\n");
+
     }
 
     public static int getAmountOfNumbers() {
@@ -190,7 +199,7 @@ public class ActionsWithNumbers {
         System.out.println("Numbers with length more than average:");
         for (String element : arrayOfStrings) {
             if (element.length() > averageLength) {
-                System.out.print(element + " (length: " + element.length()+ ") ");
+                System.out.print(element + " (length: " + element.length() + ") ");
             }
         }
         System.out.println("\n");
@@ -210,4 +219,43 @@ public class ActionsWithNumbers {
             return totalLength / amountOfElements;
         }
     }
+
+    public static int getNumberWithMinAmountOfDifferentDigits(int[] arrayOfInts) {
+        int numberWithMinAmountOfDifferentDigits;
+        if (arrayOfInts.length == 0) {
+            numberWithMinAmountOfDifferentDigits = 0;
+        } else if (arrayOfInts.length == 1) {
+            numberWithMinAmountOfDifferentDigits = arrayOfInts[0];
+        } else {
+            int minAmountOfDifferentDigits = 10;
+            int indexOfNumberWithMinAmountOfDifferentDigits = 0;
+            for (int i = 0; i < arrayOfInts.length; i++) {
+                int amountOfDifferentDigits = getAmountOfDifferentDigits(arrayOfInts[i]);
+                if (amountOfDifferentDigits < minAmountOfDifferentDigits) {
+                    minAmountOfDifferentDigits = amountOfDifferentDigits;
+                    indexOfNumberWithMinAmountOfDifferentDigits = i;
+                }
+            }
+            numberWithMinAmountOfDifferentDigits = arrayOfInts[indexOfNumberWithMinAmountOfDifferentDigits];
+        }
+        return numberWithMinAmountOfDifferentDigits;
+    }
+
+    public static int getAmountOfDifferentDigits(int number) {
+        int amountOfDifferentDigits = 0;
+        String numberAsString = Integer.toString(Math.abs(number));
+        boolean hasDigit;
+
+        for (int i = 0; i < 10; i++) {
+            String pattern = "[" + i + "]";
+            hasDigit = Pattern.compile(pattern).matcher(numberAsString).find();
+            if (hasDigit) {
+                amountOfDifferentDigits++;
+            }
+        }
+
+        return amountOfDifferentDigits;
+    }
+
+
 }
