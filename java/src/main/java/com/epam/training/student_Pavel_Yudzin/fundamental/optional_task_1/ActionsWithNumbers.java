@@ -11,11 +11,8 @@ package com.epam.training.student_Pavel_Yudzin.fundamental.optional_task_1;
     7. Найти число, состоящее только из различных цифр. Если таких чисел несколько, найти первое из них.
  */
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ActionsWithNumbers {
@@ -25,7 +22,7 @@ public class ActionsWithNumbers {
 //
 //        amountOfNumbers = getAmountOfNumbers();
 //        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfInts = {-384, 42, -4, 5645, 49, 384, 8};
+        int[] arrayOfInts = {-384, 42, -4, 5645, 49, 684, 8};
 
         System.out.println(Arrays.toString(arrayOfInts) + "\n");
         printTheShortestNumber(arrayOfInts);
@@ -37,6 +34,12 @@ public class ActionsWithNumbers {
         int numberWithMinAmountOfDifferentDigits;
         numberWithMinAmountOfDifferentDigits = getNumberWithMinAmountOfDifferentDigits(arrayOfInts);
         System.out.println("Number with minimum amount of different digits: " + numberWithMinAmountOfDifferentDigits + "\n");
+
+        int amountOfNumbersWithOnlyEvenDigits = getAmountOfNumbersWithOnlyEvenDigits(arrayOfInts);
+        System.out.println("Amount of numbers with only even digits: " + amountOfNumbersWithOnlyEvenDigits);
+
+        int amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits = getAmountOfNumbersWithWithEqualAmountOfEvenAndOddDigits(arrayOfInts);
+        System.out.println("Amount of numbers with equal amount of even and odd digits: " + amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits);
 
     }
 
@@ -257,5 +260,63 @@ public class ActionsWithNumbers {
         return amountOfDifferentDigits;
     }
 
+    public static int getAmountOfNumbersWithOnlyEvenDigits(int[] arrayOfInts) {
+        int amountOfNumbersWithOnlyEvenDigits = 0;
+        for (int number : arrayOfInts) {
+            boolean isAbsolutelyEven = hasOnlyEvenDigits(number);
+            if (isAbsolutelyEven) {
+                amountOfNumbersWithOnlyEvenDigits++;
+            }
+        }
 
+        return amountOfNumbersWithOnlyEvenDigits;
+    }
+
+    public static boolean hasOnlyEvenDigits(int number) {
+        boolean hasOddDigits;
+        String numberAsString = Integer.toString(number);
+        hasOddDigits = Pattern.compile("[13579]").matcher(numberAsString).find();
+        return !hasOddDigits;
+    }
+
+    public static int getAmountOfNumbersWithWithEqualAmountOfEvenAndOddDigits(int[] arrayOfInts) {
+        int amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits = 0;
+        int amountOfEvenDigits;
+        int amountOfOddDigits;
+
+        for (int number : arrayOfInts) {
+            amountOfEvenDigits = getAmountOfEvenDigits(number);
+            amountOfOddDigits = getAmountOfOddDigits(number);
+            if (amountOfEvenDigits == amountOfOddDigits) {
+                amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits++;
+            }
+        }
+        return amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits;
+    }
+
+    public static int getAmountOfEvenDigits(int number) {
+        int amountOfEvenDigits = 0;
+        String[] arrayOfDigits = Integer.toString(Math.abs(number)).split("");
+
+        for (String element : arrayOfDigits) {
+            if(Pattern.compile("[02468]").matcher(element).find()) {
+                amountOfEvenDigits++;
+            }
+        }
+
+        return amountOfEvenDigits;
+    }
+
+    public static int getAmountOfOddDigits(int number) {
+        int amountOfOddDigits = 0;
+        String[] arrayOfDigits = Integer.toString(Math.abs(number)).split("");
+
+        for (String element : arrayOfDigits) {
+            if(Pattern.compile("[13579]").matcher(element).find()) {
+                amountOfOddDigits++;
+            }
+        }
+
+        return amountOfOddDigits;
+    }
 }
