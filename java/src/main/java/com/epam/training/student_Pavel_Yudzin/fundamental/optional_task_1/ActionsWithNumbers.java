@@ -22,7 +22,7 @@ public class ActionsWithNumbers {
 //
 //        amountOfNumbers = getAmountOfNumbers();
 //        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfInts = {-384, 42, -4, 5645, 49, 684, 8};
+        int[] arrayOfInts = {-384, 24, -4, 5645, 49, 684, 8};
 
         System.out.println(Arrays.toString(arrayOfInts) + "\n");
         printTheShortestNumber(arrayOfInts);
@@ -41,6 +41,8 @@ public class ActionsWithNumbers {
         int amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits = getAmountOfNumbersWithWithEqualAmountOfEvenAndOddDigits(arrayOfInts);
         System.out.println("Amount of numbers with equal amount of even and odd digits: " + amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits);
 
+        int numberWithIncreasingDigits = getNumberWithIncreasingDigits(arrayOfInts);
+        System.out.println("Number with increasing digits: " + numberWithIncreasingDigits);
     }
 
     public static int getAmountOfNumbers() {
@@ -299,7 +301,7 @@ public class ActionsWithNumbers {
         String[] arrayOfDigits = Integer.toString(Math.abs(number)).split("");
 
         for (String element : arrayOfDigits) {
-            if(Pattern.compile("[02468]").matcher(element).find()) {
+            if (Pattern.compile("[02468]").matcher(element).find()) {
                 amountOfEvenDigits++;
             }
         }
@@ -312,11 +314,43 @@ public class ActionsWithNumbers {
         String[] arrayOfDigits = Integer.toString(Math.abs(number)).split("");
 
         for (String element : arrayOfDigits) {
-            if(Pattern.compile("[13579]").matcher(element).find()) {
+            if (Pattern.compile("[13579]").matcher(element).find()) {
                 amountOfOddDigits++;
             }
         }
 
         return amountOfOddDigits;
+    }
+
+    public static int getNumberWithIncreasingDigits(int[] arrayOfInts) {
+        int numberWithIncreasingDigits = 0;
+
+        for (int element : arrayOfInts) {
+            if (hasIncreasingSequence(element)) {
+                numberWithIncreasingDigits = element;
+                break;
+            }
+        }
+        return numberWithIncreasingDigits;
+    }
+
+    public static boolean hasIncreasingSequence(int number) {
+        boolean isIncreasingSequence = true;
+        number = Math.abs(number);
+
+        while (number != 0) {
+            int nextDigit;
+            int previousDigit;
+
+            nextDigit = number - (number / 10) * 10;
+            number /= 10;
+            previousDigit = number - (number / 10) * 10;
+            if (previousDigit > nextDigit) {
+                isIncreasingSequence = false;
+                break;
+            }
+        }
+
+        return isIncreasingSequence;
     }
 }
