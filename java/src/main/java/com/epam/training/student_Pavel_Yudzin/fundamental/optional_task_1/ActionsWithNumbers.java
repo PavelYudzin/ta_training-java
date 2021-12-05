@@ -22,7 +22,7 @@ public class ActionsWithNumbers {
 //
 //        amountOfNumbers = getAmountOfNumbers();
 //        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfInts = {-384, 24, -4, 5645, 49, 684, 8};
+        int[] arrayOfInts = {-3848, 24, -4, 5645, 49, 684, 8};
 
         System.out.println(Arrays.toString(arrayOfInts) + "\n");
         printTheShortestNumber(arrayOfInts);
@@ -39,10 +39,13 @@ public class ActionsWithNumbers {
         System.out.println("Amount of numbers with only even digits: " + amountOfNumbersWithOnlyEvenDigits);
 
         int amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits = getAmountOfNumbersWithWithEqualAmountOfEvenAndOddDigits(arrayOfInts);
-        System.out.println("Amount of numbers with equal amount of even and odd digits: " + amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits);
+        System.out.println("Amount of numbers with equal amount of even and odd digits: " + amountOfNumbersWithWithEqualAmountOfEvenAndOddDigits + "\n");
 
         int numberWithIncreasingDigits = getNumberWithIncreasingDigits(arrayOfInts);
-        System.out.println("Number with increasing digits: " + numberWithIncreasingDigits);
+        System.out.println("Number with increasing digits: " + numberWithIncreasingDigits + "\n");
+
+        int numberThatContainsOnlyDifferentDigits = getNumberThatContainsOnlyDifferentDigits(arrayOfInts);
+        System.out.println("Number that contains only different digits: " + numberThatContainsOnlyDifferentDigits);
     }
 
     public static int getAmountOfNumbers() {
@@ -311,9 +314,9 @@ public class ActionsWithNumbers {
 
     public static int getAmountOfOddDigits(int number) {
         int amountOfOddDigits = 0;
-        String[] arrayOfDigits = Integer.toString(Math.abs(number)).split("");
+        String[] stringArrayOfDigits = Integer.toString(Math.abs(number)).split("");
 
-        for (String element : arrayOfDigits) {
+        for (String element : stringArrayOfDigits) {
             if (Pattern.compile("[13579]").matcher(element).find()) {
                 amountOfOddDigits++;
             }
@@ -352,5 +355,35 @@ public class ActionsWithNumbers {
         }
 
         return isIncreasingSequence;
+    }
+
+    public static int getNumberThatContainsOnlyDifferentDigits(int[] arrayOfInts) {
+        int numberThatContainsOnlyDifferentDigits = 0;
+
+        for (int element : arrayOfInts) {
+            if (hasOnlyDifferentDigits(element)) {
+                numberThatContainsOnlyDifferentDigits = element;
+                break;
+            }
+        }
+        return numberThatContainsOnlyDifferentDigits;
+    }
+
+    public static boolean hasOnlyDifferentDigits(int number) {
+        boolean hasOnlyDifferentDigits = true;
+        String[] stringArrayOfDigits = Integer.toString(Math.abs(number)).split("");
+        StringBuilder digits = new StringBuilder("");
+
+        for (String element : stringArrayOfDigits) {
+            String pattern = "[" + element + "]";
+            if (!Pattern.compile(pattern).matcher(digits).find()) {
+                digits.append(element);
+            } else {
+                hasOnlyDifferentDigits = false;
+                break;
+            }
+        }
+
+        return hasOnlyDifferentDigits;
     }
 }
