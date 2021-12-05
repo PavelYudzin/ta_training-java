@@ -1,7 +1,7 @@
 package com.epam.training.student_Pavel_Yudzin.fundamental.optional_task_1;
 
 /*
-    Ввести n чисел с консоли.
+       Ввести n чисел с консоли.
     1. Найти самое короткое и самое длинное число. Вывести найденные числа и их длину.
     2. Вывести числа в порядке возрастания (убывания) значений их длины.
     3. Вывести на консоль те числа, длина которых меньше (больше) средней длины по всем числам, а также длину.
@@ -18,11 +18,10 @@ import java.util.regex.Pattern;
 public class ActionsWithNumbers {
     public static void main(String[] args) {
         int amountOfNumbers;
-//        int[] arrayOfInts;
-//
-//        amountOfNumbers = getAmountOfNumbers();
-//        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
-        int[] arrayOfInts = {-3848, 24, -4, 5645, 49, 684, 8};
+        int[] arrayOfInts;
+
+        amountOfNumbers = getAmountOfNumbers();
+        arrayOfInts = getArrayOfIntegerNumbers(amountOfNumbers);
 
         System.out.println(Arrays.toString(arrayOfInts) + "\n");
         printTheShortestNumber(arrayOfInts);
