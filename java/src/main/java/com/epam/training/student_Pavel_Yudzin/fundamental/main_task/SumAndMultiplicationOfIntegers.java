@@ -6,6 +6,10 @@ package com.epam.training.student_Pavel_Yudzin.fundamental.main_task;
 
 public class SumAndMultiplicationOfIntegers {
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Enter integer numbers as command line arguments!");
+            System.exit(-1);
+        }
         int sum;
         int multiplication;
 
